@@ -4,12 +4,11 @@ class ProductsController < ApplicationController
   def index
     @category=Category.find(params[:category_id])
     @products=@category.products
-
-
   end
+
   def new
     @category=Category.find(params[:category_id])
-    @product=Product.new
+    @product=@category.products.new
   end
 
   def edit
@@ -30,34 +29,38 @@ class ProductsController < ApplicationController
   end
 
   def create
-
-
-    @product=Product.new(name:product_params[:name],category_id:product_params[:category_id])
-
+    @category = Category.find(params[:category_id])
+    @product = @category.products.create(product_params)
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
+        format.html { redirect_to  [@product.category, @product], notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
-
   end
-
-
 
   def show
 
+  end
+
+  def destroy
+    @product_id = @product.id
+    @product.destroy
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
   def product_params
     params.require(:product).permit(:name,:category_id)
   end
-def set_product
-  @product=Product.find(params[:id])
-end
+  def set_product
+    @product=Product.find(params[:id])
+    @category=Category.find(params[:category_id])
+  end
 
 end
