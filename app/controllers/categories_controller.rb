@@ -10,11 +10,16 @@ class CategoriesController < ApplicationController
   end
   def new
     @category=Category.new
+    2.times {@category.products.build}
   end
 
   def create
 
     @category=Category.new(category_params)
+    product_list = params[:category][:products_attributes].values
+    (0...product_list.length).each do |i|
+      @category.products << Product.create(product_list[i])
+    end
 
     respond_to do |format|
       if @category.save
@@ -52,7 +57,11 @@ class CategoriesController < ApplicationController
   end
 private
   def category_params
+
     params.require(:category).permit(:name)
+  end
+  def product_params
+    params[:category][:products_attributes].values
   end
   def set_category
     @category = Category.find(params[:id])
