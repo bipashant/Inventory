@@ -1,5 +1,16 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+
+  before_action :custom_authentication
+  def custom_authentication
+    if (user_signed_in?)
+      p"email"
+      p current_user.email
+    else
+      redirect_to new_user_session_path
+    end
+  end
+
   def index
 
     @categories=Category.all
@@ -7,7 +18,8 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @products=Category.find(params[:id]).products
+    redirect_to category_products_path(@category)
+    # @products=Category.find(params[:id]).products
   end
   def new
     @category=Category.new()
@@ -35,7 +47,8 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to categories_url, notice: 'Category was successfully updated.' }
+        flash[:notice]='Category was successfully updated.'
+        format.html { redirect_to categories_url}
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
@@ -47,7 +60,8 @@ class CategoriesController < ApplicationController
   def destroy
     @category.destroy
     respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
+      flash.now[:notice]='Category was successfully destroyed.'
+      format.html { redirect_to categories_url }
       format.json { head :no_content }
     end
   end
