@@ -4,8 +4,7 @@ class CategoriesController < ApplicationController
   before_action :custom_authentication
   def custom_authentication
     if (user_signed_in?)
-      p"email"
-      p current_user.email
+      
     else
       redirect_to new_user_session_path
     end
