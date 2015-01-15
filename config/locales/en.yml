@@ -21,3 +21,11 @@
 
 en:
   hello: "Hello world"
+  category_was_successfully_created: 'Category was successfully created'
+  category_was_successfully_updated: 'Category was successfull updated'
+  category_was_successfully_destroyed: 'category_was_successfully_destroyed'
+  product_was_successfully_created: 'product was_successfully created'
+  product_creation_unsuccessful: 'product creation unsuccessful'
+  product_was_successfully_updated: 'product_was_successfully_updated'
+  product_update_unsuccessful: 'product_update_unsuccessful'
+  product_was_successfully_destroyed: 'product_was_successfully_destroyed'

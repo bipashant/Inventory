@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  before_action :custom_authentication
   def index
     @category=Category.find(params[:category_id])
     @products=@category.products
@@ -19,9 +19,13 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to category_product_url, notice: 'Product was successfully updated.' }
+        notice='product_was_successfully_updated'
+        flash.now[:notice]=notice
+        format.html { redirect_to category_product_url }
         format.json { render :show, status: :ok, location: @product }
       else
+        notice = 'product_update_unsuccessful'
+        flash.now[:notice]=notice
         format.html { render :edit }
         format.json { render json: @product.errors, sedit_product_pathtatus: :unprocessable_entity }
       end
@@ -31,11 +35,17 @@ class ProductsController < ApplicationController
   def create
     @category = Category.find(params[:category_id])
     @product = @category.products.create(product_params)
+    UserMailer.send_email(@product.id).deliver
     respond_to do |format|
       if @product.save
-        format.html { redirect_to  [@product.category, @product], notice: 'Product was successfully created.' }
+
+        notice='product_was_successfully_created'
+        flash.now[:notice]=notice
+        format.html { redirect_to  [@product.category, @product]}
         format.json { render :show, status: :created, location: @product }
       else
+        notice = 'product_creation_unsuccessful'
+        flash[:notice]=notice
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
@@ -48,9 +58,10 @@ class ProductsController < ApplicationController
 
   def destroy
     @product_id = @product.id
-    @product.destroy
     respond_to do |format|
+    if (@product.destroy)
       format.js
+    end
     end
   end
 
@@ -61,6 +72,16 @@ class ProductsController < ApplicationController
   def set_product
     @product=Product.find(params[:id])
     @category=Category.find(params[:category_id])
+    # begin
+    #
+    # rescue
+    #   respond_to do |format|
+    #
+    #     format.js
+    #     # {render json:{status:'failure', message:'failed to deleted product'}}
+    #   end
+    # end
+
   end
 
 end

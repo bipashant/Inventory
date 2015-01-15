@@ -12,9 +12,16 @@
     <% end %>
 
     <div class="field">
-      <%= f.label :name %><br>
-      <%= f.text_field :name %>
+      <%= f.label :name %>
+      <%= f.text_field :name %><br>
     </div>
+    <p>Add products</p>
+    <%= f.fields_for :products do |builder| %>
+    <%= builder.label :name %>
+    <%= builder.text_field :name %>
+    <%= builder.label :quantity, "Quantity"  %>
+    <%= builder.text_field :quantity %><br>
+    <% end %>
     <div class="actions">
       <%= f.submit %>
     </div>
