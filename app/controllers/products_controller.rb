@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  before_action :custom_authentication
   def index
     @category=Category.find(params[:category_id])
     @products=@category.products

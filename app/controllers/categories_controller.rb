@@ -1,14 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
-
   before_action :custom_authentication
-  def custom_authentication
-    if (user_signed_in?)
-      
-    else
-      redirect_to new_user_session_path
-    end
-  end
 
   def index
 
