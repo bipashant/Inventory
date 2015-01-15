@@ -1,14 +1,15 @@
+<div id="destroy-notice"></div>
 <h1>Listing related Products</h1>
-
 <table>
   <thead>
-
+    <th>Name</th><th>Quantity</th>
   </thead>
 
   <tbody>
   <% @products.each do |product| %>
     <tr id="product_<%=product.id%>">
       <td><%= product.name %></td>
+      <td><%= product.quantity %></td>
       <td><%= link_to 'Show', category_product_path(@category,product) %></td>
       <td><%= link_to 'Edit', edit_category_product_path(@category,product) %></td>
       <td><%= link_to 'Destroy', category_product_path(@category,product), method: :delete,remote: true, data: { confirm: 'Are you sure?' } %></td>
@@ -18,6 +19,7 @@
 </table>
 
 <%= link_to 'Add new Product', new_category_product_path %>
+<%= link_to 'Back', categories_path %>
 
 
 
