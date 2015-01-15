@@ -1,3 +1,4 @@
+<%= flash[:notice]  %><br>
 <%=@product.name%>
 <%= link_to 'Edit', edit_category_product_path(@product.category,@product) %> |
 <%= link_to 'Back', category_products_path %>
