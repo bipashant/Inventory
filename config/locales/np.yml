@@ -1,0 +1,11 @@
+np:
+  hello: "नमस्ते"
+  category_was_successfully_created: ' श्रेणी सफलतापूर्वक सिर्जना गरिएको थियो । '
+  category_was_successfully_updated: 'श्रेणी सफलतापूर्वक अद्यावधिक गरिएको थियो'
+  category_was_successfully_destroyed: 'श्रेणी सफलतापूर्वक नष्ट भएको थियो'
+  product_was_successfully_created: 'उत्पादन सफलतापूर्वक सिर्जना गरिएको थियो ।'
+  product_creation_unsuccessful: 'उत्पादन सृष्टि सफल भएन'
+  product_was_successfully_updated: 'उत्पादन सफलतापूर्वक अद्यावधिक गरिएको थियो ।'
+  product_update_unsuccessful: 'उत्पादन अपडेट सफल थिएन'
+  product_was_successfully_destroyed: ' उत्पादन सफलतापूर्वक सिर्जना गरिएको थियो । '
+

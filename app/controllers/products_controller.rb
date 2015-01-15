@@ -19,11 +19,13 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        flash[:notice]='Product was successfully updated.'
+        notice='product_was_successfully_updated'
+        flash.now[:notice]=notice
         format.html { redirect_to category_product_url }
         format.json { render :show, status: :ok, location: @product }
       else
-        flash[:notice]='Product update was not successful.'
+        notice = 'product_update_unsuccessful'
+        flash.now[:notice]=notice
         format.html { render :edit }
         format.json { render json: @product.errors, sedit_product_pathtatus: :unprocessable_entity }
       end
@@ -33,13 +35,17 @@ class ProductsController < ApplicationController
   def create
     @category = Category.find(params[:category_id])
     @product = @category.products.create(product_params)
+    UserMailer.send_email(@product.id).deliver
     respond_to do |format|
       if @product.save
-        flash[:notice]='Product was successfully created.'
+
+        notice='product_was_successfully_created'
+        flash.now[:notice]=notice
         format.html { redirect_to  [@product.category, @product]}
         format.json { render :show, status: :created, location: @product }
       else
-        flash[:notice]='Product creation was not successful'
+        notice = 'product_creation_unsuccessful'
+        flash[:notice]=notice
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end

@@ -4,11 +4,20 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   # before_action :authenticate_user!
   def custom_authentication
+    I18n.locale = params[:locale]
+
     if (user_signed_in?)
 
     else
       raise AccessDenied
     end
+
+    # begin
+    #   I18n.locale = params[:locale]
+    #
+    # rescue =>e
+    #   I18n.locale ='np'
+    # end
   end
 
   class AccessDenied < StandardError; end
