@@ -2,13 +2,14 @@
 
 <table>
   <thead>
-
+    <th>Name</th><th>Quantity</th>
   </thead>
 
   <tbody>
   <% @products.each do |product| %>
     <tr id="product_<%=product.id%>">
       <td><%= product.name %></td>
+      <td><%= product.quantity %></td>
       <td><%= link_to 'Show', category_product_path(@category,product) %></td>
       <td><%= link_to 'Edit', edit_category_product_path(@category,product) %></td>
       <td><%= link_to 'Destroy', category_product_path(@category,product), method: :delete,remote: true, data: { confirm: 'Are you sure?' } %></td>
